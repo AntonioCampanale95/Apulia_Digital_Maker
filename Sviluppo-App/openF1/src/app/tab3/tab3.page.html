@@ -1,0 +1,32 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+   <ion-title>
+      <div style="display: flex; justify-content: center; align-items: center; height: 100px;">
+      <img src="assets/f1.svg" alt="LogoF1App" style="height: 100px; margin: 0 auto; fill: #fffefe;" />
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Tab 3</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+ <div class="weather-card">
+   @if (weatherData && gp.length > 0) {
+    <h2>Meteo Corrente - {{getTrackName()}}</h2>
+    <p>Temperatura dell'aria: {{ weatherData.air_temperature }}°C</p>
+    <p>Umidità: {{ weatherData.humidity }}%</p>
+    <p>Pressione: {{ weatherData.pressure }} hPa</p>
+    <p>Temperatura della pista: {{ weatherData.track_temperature }}°C</p>
+    <p>Velocità del vento: {{ weatherData.wind_speed }} m/s</p>
+    <p>Direzione del vento: {{ weatherData.wind_direction }}°</p>
+   }
+  </div>
+
+
+
+</ion-content>

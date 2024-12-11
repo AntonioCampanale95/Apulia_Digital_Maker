@@ -1,0 +1,62 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <div style="display: flex; justify-content: center; align-items: center; height: 100px;">
+      <img src="assets/f1.svg" alt="LogoF1App" style="height: 100px; margin: 0 auto; fill: #fffefe;" />
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Tab 1</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <app-explore-container name="Tab 1 page"></app-explore-container>
+
+  <ion-item style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+  <ion-label style="margin-bottom: 8px;">Seleziona Anno</ion-label>
+  <ion-select 
+    [(ngModel)]="selectedYear" 
+    (ionChange)="getFilteredGrandPrix()" 
+    placeholder="Scegli un anno" 
+    interface="popover"
+    style="width: 100%; max-width: 200px;">
+    @for (year of years; track $index) {
+      <ion-select-option [value]="year">{{year}}</ion-select-option>
+    }
+  </ion-select>
+</ion-item>
+
+
+  @if (!isLoading) {
+    <ion-list>
+    @if (getFilteredGrandPrix().length) {
+      <ng-container else noGrandPrix></ng-container>
+      @for (gp of getFilteredGrandPrix(); track $index) {
+        <ion-item>
+        <ion-label style="text-align: center;">
+        <h3>{{gp.meeting_official_name}}</h3>
+        <p>{{gp.country_name}}</p>
+        <ion-button  [routerLink]="['/tabs/tab1', gp.meeting_key]">
+        Dettagli</ion-button>
+        </ion-label>
+        
+        </ion-item>
+      }
+    }<ng-template #noGrandPrix>
+    <ion-label>
+    <h3>Nessun Gran Premio trovato per l'anno selezionato!</h3>
+    </ion-label></ng-template></ion-list>
+  }
+  @if (isError) {
+    <ion-label>
+    <h3>Errore!</h3>
+    <ion-button (click)="OnRefreshPage()">
+    Clicca qui per riaggiornare.
+    </ion-button></ion-label>
+  }
+</ion-content>

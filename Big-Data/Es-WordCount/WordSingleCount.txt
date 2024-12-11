@@ -1,0 +1,63 @@
+package com.example;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+
+public class WordSingleCount {
+	public static void main(String[] args) throws Exception {
+
+    	// Faccio una verifica sugli input output e l'operazione scelta
+
+    	if (args.length != 3) {
+        	System.err.println("Usage: WordCount <input path> <output path> <operazione>");
+        	System.exit(-1);
+    	}
+    	// Mi vado a creare una configurazione per hadoop (gli dico che operazione dovrà prendermela da args2)
+
+    	Configuration conf = new Configuration();
+		String operazione = args[2];
+
+		//controllo che l'operazione selezionata sia valida
+
+		if(!operazioneValida(operazione)){
+            System.err.println("Operazione non valida. Le operazioni disponibili sono: uniche");
+            System.exit(-1);
+        }
+
+        conf.set("operazione", operazione);
+    	
+    	// creo il job nuovo
+
+    	Job job = Job.getInstance(conf, "word single count");
+    	job.setJarByClass(WordSingleCount.class);
+    	
+    	// setto mapper e reducer passandogli le classi
+
+    	job.setMapperClass(WordMapper.class);
+    	job.setReducerClass(WordReducer.class);
+    	
+    	// setto l'output che mi dovranno fornire il mapper e il reducer
+
+    	job.setOutputKeyClass(Text.class);
+    	job.setOutputValueClass(LongWritable.class);
+    	// setto il percorso per l'input e l'output di hdfs
+
+    	FileInputFormat.addInputPath(job, new Path(args[0]));
+    	FileOutputFormat.setOutputPath(job, new Path(args[1]));
+    	// faccio partire il job e ho un operatore ternario che mi controlla se è completato il lavoro o no
+		
+    	System.exit(job.waitForCompletion(true) ? 0 : 1);
+	}
+
+	//metodo di controllo per la scelta dell'operazione
+
+    private static boolean operazioneValida(String operazione) {
+        return operazione.equals("uniche");
+    }
+}
+

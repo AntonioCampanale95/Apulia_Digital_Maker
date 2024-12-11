@@ -1,0 +1,117 @@
+:host {
+  --ion-background-color: #f5f7fa; 
+  --ion-toolbar-background: #3498db;
+  --ion-toolbar-color: #ffffff; 
+  --ion-card-background: #ecf0f1; 
+  --ion-card-title-color: #2c3e50; 
+  --ion-card-subtitle-color: #7f8c8d; 
+  --ion-skeleton-background: #bdc3c7; 
+  --ion-button-background: #2980b9;
+  --ion-button-color: #ffffff;
+}
+
+ion-header {
+  background-color: var(--ion-toolbar-background);
+
+  ion-title {
+    color: var(--ion-toolbar-color);
+  }
+
+  img {
+    fill: #ffffff; 
+  }
+}
+
+ion-content {
+  background-color: var(--ion-background-color);
+}
+
+.page-title {
+  text-align: center;
+  margin: 20px 0;
+  
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--ion-card-title-color);
+  }
+}
+
+ion-list {
+  margin-top: 15px;
+}
+
+ion-item {
+  background-color: transparent;
+}
+
+ion-skeleton-text {
+  --background: var(--ion-skeleton-background);
+}
+
+ion-card {
+  background-color: var(--ion-card-background);
+  margin-bottom: 16px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; 
+
+  ion-card-header {
+    text-align: center; 
+    ion-card-title {
+      color: var(--ion-card-title-color);
+    }
+
+    ion-card-subtitle {
+      color: var(--ion-card-subtitle-color);
+    }
+  }
+
+  ion-card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--ion-card-title-color);
+
+    .driver-image {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 8px 0;
+      border: 2px solid #2980b9; 
+    }
+
+    p {
+      margin-top: 8px;
+    }
+  }
+}
+
+ion-button {
+  --background: var(--ion-button-background);
+  --color: var(--ion-button-color);
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.error-card {
+  background-color: #e74c3c;
+  color: #ffffff;
+
+  ion-card-header {
+    ion-card-title {
+      color: #ffffff; 
+    }
+  }
+
+  ion-card-content {
+    ion-button {
+      --background: #c0392b; 
+    }
+  }
+}

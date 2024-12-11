@@ -1,0 +1,10 @@
+ESERCITAZIONE PRATICA PRIMO ANNO - ANTONIO CAMPANALE
+
+1) Creo un file di testo prova.txt e lo riempio.
+Faccio partire il file system hdfs con il comando da terminale start-dfs.cmd
+Per caricarlo sul mio hdfs uso il comando hdfs dfs -put con il percorso del mio file da mandare in input.
+Posso verificare se è andato a buon fine con il comando hdfs dfs -ls /input (si vede all'interno il file prova.txt)
+
+2)3) Ho pensato di creare più classi per garantire maggiore chiarezza e più divisione dei compiti. Ho creato la classe WordSingleCount(main) per la configurazione dell'hdfs, la classe WordMapper per effettuare il Map, la classe WordReduce per effettuare il Reduce e la classe MongoDBConnection per connettermi a mongoDb e poter andare a salvare il mio output nella collezionne "ParoleUniche".
+
+4) Un HDFS utilizzato in locale mi permette di controllare in prima persona diversi aspetti: posso gestire tutte le mie risorse hardware e di configurazione di tutti i componenti; avrei probabilmente una maggiore sicurezza visto che ci può accedere solo chi dico io; possibile maggiore velocità nell'elaborazione visto che ho tutto a portata di mano senza dover sfruttare la rete. Tutto questo però potrebbe andare a discapito dell'affidabilità perché in locale dovrebbe essere mononodo e questo potrebbe ccreare dei problemi visto che non sfruttiamo la scalabilità e acnhe per la ridondanza ci sarebbero problemi perché un conto è replicare i dati su più nodi un conto è averlo solo in uno che se si rompe il sistema operativo o altro i dati potrebbero andare persi.

@@ -1,0 +1,144 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\fgran\\Desktop\\TestDatabase-20240708T134716Z-001\\TestDatabase\\Domain\\Domain.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\fgran\\Desktop\\TestDatabase-20240708T134716Z-001\\TestDatabase\\Domain\\Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\fgran\\Desktop\\TestDatabase-20240708T134716Z-001\\TestDatabase\\Domain\\Domain.csproj",
+        "projectName": "Domain",
+        "projectPath": "C:\\Users\\fgran\\Desktop\\TestDatabase-20240708T134716Z-001\\TestDatabase\\Domain\\Domain.csproj",
+        "packagesPath": "C:\\Users\\fgran\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\fgran\\Desktop\\TestDatabase-20240708T134716Z-001\\TestDatabase\\Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\DevExpress 22.2\\Components\\Offline Packages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\fgran\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 22.2.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\DevExpress 22.2\\Components\\System\\Components\\Packages": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.devexpress.com/xS23l6J2QM5lfjOoZLY51mGjdlBjnxHBbX69FFB9Smodzitm27/api": {},
+          "https://nuget.pkg.github.com/rocketcodeit/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\fgran\\Desktop\\TestDatabase-20240708T134716Z-001\\TestDatabase\\RepoLibrary\\RepoLibrary.csproj": {
+                "projectPath": "C:\\Users\\fgran\\Desktop\\TestDatabase-20240708T134716Z-001\\TestDatabase\\RepoLibrary\\RepoLibrary.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.201/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\fgran\\Desktop\\TestDatabase-20240708T134716Z-001\\TestDatabase\\RepoLibrary\\RepoLibrary.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\fgran\\Desktop\\TestDatabase-20240708T134716Z-001\\TestDatabase\\RepoLibrary\\RepoLibrary.csproj",
+        "projectName": "RepoLibrary",
+        "projectPath": "C:\\Users\\fgran\\Desktop\\TestDatabase-20240708T134716Z-001\\TestDatabase\\RepoLibrary\\RepoLibrary.csproj",
+        "packagesPath": "C:\\Users\\fgran\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\fgran\\Desktop\\TestDatabase-20240708T134716Z-001\\TestDatabase\\RepoLibrary\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\DevExpress 22.2\\Components\\Offline Packages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\fgran\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 22.2.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\DevExpress 22.2\\Components\\System\\Components\\Packages": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.devexpress.com/xS23l6J2QM5lfjOoZLY51mGjdlBjnxHBbX69FFB9Smodzitm27/api": {},
+          "https://nuget.pkg.github.com/rocketcodeit/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.6, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.201/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

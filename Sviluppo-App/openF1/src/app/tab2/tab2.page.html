@@ -1,0 +1,59 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <div style="display: flex; justify-content: center; align-items: center; height: 100px;">
+      <img src="assets/f1.svg" alt="LogoF1App" style="height: 100px; margin: 0 auto; fill: #fffefe;" />
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Piloti</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-text class="page-title" color="dark">
+    <h2>Piloti Attualmente in Attività</h2>
+  </ion-text>
+
+  @if (!isLoading) {
+    <ion-list>
+      @for (driver of [1,2,3,4,5,6,7,8,9]; track $index) {
+        <ion-item>
+          <ion-skeleton-text [animated]="true" style="width: 100%; height: 80px;"></ion-skeleton-text>
+        </ion-item>
+      }
+    </ion-list>
+  } @else {
+    <ion-list>
+      @for (drivers of drivers; track $index) {
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{ drivers.full_name }}</ion-card-title>
+            <ion-card-subtitle>{{drivers.team_name}}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <img [src]="drivers.headshot_url" alt="{{drivers.full_name}}" class="driver-image"/>
+            <p>{{drivers.country_code}}</p>
+          </ion-card-content>
+        </ion-card>
+      }
+    </ion-list>
+  }
+
+  @if (isError) {
+    <ion-card class="error-card">
+      <ion-card-header>
+        <ion-card-title>Errore!</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-button expand="full" (click)="OnRefreshPage()">
+          Clicca qui per riaggiornare
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  }
+</ion-content>

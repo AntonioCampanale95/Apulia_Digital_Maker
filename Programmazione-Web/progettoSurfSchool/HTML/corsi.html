@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I nostri corsi</title>
+    <link rel="stylesheet" href="/CSS/corsi.css">
+    <link rel="icon" type="image/x-icon" href="/MULTIMEDIA/FOTO/x.ico">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul id="navbar">
+                <li><img src="/MULTIMEDIA/FOTO/logo.png"></li>
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="../HTML/aboutUs.html">About Us</a></li>
+                <li><a href="../HTML/corsi.html">Corsi</a></li>
+                <li><a href="../HTML/contatti.html">Contatti</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h1 id="titolo1"> I <br /> NOSTRI <br /> CORSI </h1>
+            <img id="imgbck" src="/MULTIMEDIA/FOTO/kitesurfCorsi.jpg">
+        </section>
+        <div>
+            <h4 id="h4Corsi">Scopri l'Emozione delle Onde: Corsi di Surf, Kitesurf e Windsurf</h4>
+            <p id="pCorsi">Immergiti nell'emozionante mondo degli sport acquatici con i nostri corsi di surf, kitesurf e
+                windsurf!
+                Sia che tu sia un principiante desideroso di imparare le basi o un esperto in cerca di perfezionamento,
+                il nostro team di istruttori qualificati &egrave;qui per guidarti lungo il tuo percorso. Con
+                un'attenzione
+                particolare alla sicurezza e all'apprendimento divertente, ti offriamo un'esperienza indimenticabile
+                sulle onde. Scegli il tuo sport preferito e unisciti a noi per una avventura sul mare che ti porterà a
+                cavalcare le onde con stile e fiducia. Scopri i nostri prezzi e prenota oggi per iniziare il tuo viaggio
+                verso il dominio delle acque!</p>
+        </div>
+        <section id="listaCorsi">
+            <article><a id="surf"></a>
+                <h2>CORSI DI SURF </h2>
+                <p>Lezione individuale <br /> 20&euro;</p>
+                <p>Lezione di gruppo under 14 (max 6 bambini) <br /> 10&euro;</p>
+                <p>Lezione di gruppo adulti (max 6 persone) <br /> 12&euro;</p>
+            </article>
+            <article><a id="windsurf"></a>
+                <h2>CORSI DI WINDSURF </h2>
+                <p>lezione individuale <br /> 20&euro;</p>
+                <p>lezione di gruppo under 14 (max 6 bambini)<br /> 10&euro;</p>
+                <p>lezione di gruppo adulti (max 6 persone)<br /> 12&euro;</p>
+            </article>
+            <article> <a id="kitesurf"></a>
+                <h2>CORSI DI KITESURF </h2>
+                <p>lezione individuale <br /> 20&euro;</p>
+                <p>lezione di gruppo under 14 (max 6 bambini)<br /> 10&euro;</p>
+                <p>lezione di gruppo adulti (max 6 persone)<br /> 12&euro;</p>
+            </article>
+        </section>
+
+        <section id="meteo">
+            <div id="iframeContainer">
+                <iframe width="550" height="450"
+                    src="https://embed.windy.com/embed2.html?lat=41.112&lon=16.855&detailLat=41.112&detailLon=16.855&width=650&height=450&zoom=5&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=&calendar=now&pressure=true&type=map&location=coordinates&detail=true&metricWind=km%2Fh&metricTemp=°C&radarRange=-1"
+                    frameborder="0"></iframe>
+            </div>
+            <article id="condizioniMeteo">
+                <h5>  Le Previsioni Meteo per pianificare la tua avventura con noi  </h5>
+                <p>
+                    Esplora le onde con fiducia! Qui troverai una mappa interattiva per consultare facilmente le
+                    previsioni meteo locali e pianificare le tue sessioni di surf con precisione, assicurandoti di
+                    approfittare delle condizioni ottimali per cavalcare le onde. Che tu sia un principiante entusiasta
+                    o un surfista esperto, controllare le previsioni meteo sarà il primo passo per un'esperienza
+                    indimenticabile sull'acqua. Preparati a tuffarti nell'azione e a goderti il divertimento senza
+                    limiti del surf!
+                </p>
+            </article>
+        </section>
+        
+        <!-- carosello immagini-->
+        <h2 id="titleCarosello">Le nostre recensioni</h2>
+
+        <div class="container">
+            <div class="mySlides">
+
+                <img src="../MULTIMEDIA/FOTO/png/1_.png" style="width:100%" loading="lazy">
+            </div>
+
+            <div class="mySlides">
+
+                <img src="../MULTIMEDIA/FOTO/png/2_.png" style="width:100%" loading="lazy">
+            </div>
+
+            <div class="mySlides">
+
+                <img src="../MULTIMEDIA/FOTO/png/3_.png" style="width:100%" loading="lazy">
+            </div>
+
+            <div class="mySlides">
+
+                <img src="../MULTIMEDIA/FOTO/png/4_.png" style="width:100%" loading="lazy">
+            </div>
+
+            <div class="mySlides">
+
+                <img src="../MULTIMEDIA/FOTO/png/5_.png" style="width:100%" loading="lazy">
+            </div>
+
+            <div class="mySlides">
+
+                <img src="../MULTIMEDIA/FOTO/6_.png" style="width:100%" loading="lazy">
+            </div>
+
+            <a class="prev" onclick="plusSlides(-1)">❮</a>
+            <a class="next" onclick="plusSlides(1)">❯</a>
+
+            <div class="caption-container">
+                <p id="caption"></p>
+            </div>
+        </div>
+
+
+
+    </main>
+    <footer>
+
+        <form id="newsletter">
+            <h3>Newsletter</h3>
+            <p>Cavalca l'onda e rimani sempre aggiornato sulle ultime novit&agrave;</p>
+            <br />
+            <input type="email" name="eMail" id="eMail" placeholder="inserisci e-mail" /><br />
+            <input type="image" id="submitButt" src="/MULTIMEDIA/FOTO/submit.png" alt="submit">
+            <br />
+        </form>
+        <figure>
+            <img id="logoMail" src="/MULTIMEDIA/FOTO/maiLogo.png">
+        </figure>
+        <section id="contatti">
+            <section id="social">
+                <a href="https://www.facebook.com/profile.php?id=61557305204745&mibextid=LQQJ4d">
+                    <img src="/MULTIMEDIA/FOTO/fb_logo.png">
+                </a>
+                <a href="https://www.instagram.com/xtremesurfschool?igsh=cDh5NDVqaDFmZWRq&utm_source=qr">
+                    <img src="/MULTIMEDIA/FOTO/insta_logo.png">
+                </a>
+                <a href="/MULTIMEDIA/FOTO/whatsapp_logo.png"></a>
+                <img src="/MULTIMEDIA/FOTO/whatsapp_logo.png">
+            </section>
+            <address>
+                <p>e-mail : <a href="mailto: info@XtremeSurfSchool.com"
+                        style="color: #FFA500;">info@XtremeSurfSchool.com</a></p>
+                <p>telefono : 666 - 333444888 </p>
+                <p>Via Nazario Sauro, 3 Bari</p>
+                <p>70021 Italy</p>
+            </address>
+        </section>
+
+
+    </footer>
+    <a href="" id="backToTopBtn" class="back-to-top-btn"><img src="../MULTIMEDIA/FOTO/su_button.png"></a>
+</body>
+<script src="/JAVASCRIPT/corsi.js"></script>
+
+</html>

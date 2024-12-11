@@ -1,0 +1,42 @@
+package com.example;
+
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
+import java.io.IOException;
+
+import org.apache.hadoop.conf.Configuration;
+
+public class WordMapper extends Mapper<LongWritable, Text, Text, LongWritable> {
+    private final Text word = new Text();
+    private final LongWritable count = new LongWritable(1);
+
+    @Override
+    protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+
+        //qui mi vado a recuperare la conffigurazione fatta nel main e anche l'operazione. Poi vado a spezzettarmi
+        //e a conservare in un'array di parole le parole desiderate (grazie alla regex non prendiamo le virgole ecc ecc)
+
+        Configuration conf = context.getConfiguration();
+        String operazione = conf.get("operazione");
+        String line = value.toString();
+        String[] words = line.split("[\\W]+");
+
+        //lo switch ci permette in futuro di implementare più operazioni. quando viene scelta "uniche" 
+        //il mapper andrà a trasformare le parole trovate in coppie chiave valore word-count
+
+        switch (operazione) {
+            case "uniche": {
+                for (String w : words)
+                    word.set(w);
+                context.write(word, count);
+
+                break;
+            }
+
+            default:
+                break;
+        }
+
+    }
+}

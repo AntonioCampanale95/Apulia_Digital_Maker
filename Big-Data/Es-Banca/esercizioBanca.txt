@@ -1,0 +1,244 @@
+package com.example;
+
+import java.util.Scanner;
+
+import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaPairRDD;
+import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.api.java.JavaSparkContext;
+
+import scala.Tuple2;
+
+public class Main {
+    public static void main(String[] args) {
+
+        SparkConf conf = new SparkConf().setAppName("OperazioniBancarie").setMaster("local");
+        JavaSparkContext sc = new JavaSparkContext(conf);
+        sc.setLogLevel("ERROR");
+
+        JavaRDD<String> operazioniRDD = sc.textFile("C:\\Users\\utente18\\Desktop\\txt\\transazioniBanca.txt");
+
+        Scanner scanner = new Scanner(System.in);
+        boolean continua = true;
+
+        while (continua) {
+            System.out.println("\nScegli un'operazione da eseguire:");
+            System.out.println("1. Visualizza saldo totale per cliente");
+            System.out.println("2. Visualizza cliente con il saldo più alto");
+            System.out.println("3. Visualizza il numero di prelievi e depositi effettuati");
+            System.out.println("4. Visualizza importo medio prelevato");
+            System.out.println("5. Visualizza il cliente che ha effettuato più transazioni");
+            System.out.println("6. Visualizza per ogni cliente la fascia oraria preferita per le operazioni");
+            System.out.println("0. Esci");
+            System.out.print("Inserisci la tua scelta: ");
+
+            int scelta = scanner.nextInt();
+
+            switch (scelta) {
+
+                case 1:
+                    // vedere metodo creato sotto (ho creato un metodo per rendere un pò più snello
+                    // visto che lo riutilizzo due volte)
+                    JavaPairRDD<Integer, Double> saldoTotPerClienteRDD = calcolaSaldoPerCliente(operazioniRDD);
+
+                    saldoTotPerClienteRDD.foreach(x -> {
+                        System.out.println("Cliente " + x._1() + ": " + x._2() + " EUR");
+                    });
+                    break;
+                // Inserisci la tua scelta: 1
+                // Cliente 101: 1450.0 EUR
+                // Cliente 105: 1900.0 EUR
+                // Cliente 104: -575.0 EUR
+                // Cliente 102: -495.0 EUR
+                // Cliente 106: -470.0 EUR
+                // Cliente 103: 1950.0 EUR
+
+                case 2:
+
+                    JavaPairRDD<Integer, Double> saldoPerClienteRDD = calcolaSaldoPerCliente(operazioniRDD);
+
+                    Tuple2<Integer, Double> saldoPiuAlto = saldoPerClienteRDD
+                            .reduce((a, b) -> a._2() > b._2() ? a : b);
+
+                    System.out.println("Il Cliente: " + saldoPiuAlto._1() + " ha il saldo più alto! " + " Saldo: "
+                            + saldoPiuAlto._2());
+                    break;
+
+                // Inserisci la tua scelta: 2
+                // Il Cliente: 103 ha il saldo più alto! Saldo: 1950.0
+
+                case 3:
+
+                    JavaPairRDD<String, Integer> tipoTransazioneRDD = operazioniRDD.mapToPair(line -> {
+                        String[] campi = line.split(", ");
+                        String tipoOperazione = campi[3];
+                        return new Tuple2<>(tipoOperazione, 1);
+                    });
+
+                    JavaPairRDD<String, Integer> tipoTransContoRDD = tipoTransazioneRDD.reduceByKey((a, b) -> a + b);
+
+                    tipoTransContoRDD.foreach(tipoTransConto -> System.out
+                            .println(tipoTransConto._1() + ": " + tipoTransConto._2()));
+                    break;
+
+                // Inserisci la tua scelta: 3
+                // Prelievo: 12
+                // Deposito: 13
+
+                case 4:
+                    JavaPairRDD<String, Integer> prelievoMedioRDD = operazioniRDD.mapToPair(line -> {
+                        String[] campi = line.split(", ");
+                        String tipoOperazione = campi[3];
+                        int importoPrelievo = (int) Double.parseDouble(campi[2]);
+                        return new Tuple2<>(tipoOperazione, importoPrelievo);
+                    });
+
+                    JavaPairRDD<String, Integer> totRDD = prelievoMedioRDD.reduceByKey((a, b) -> a + b);
+
+                    JavaPairRDD<String, Integer> conteggioRDD = prelievoMedioRDD.mapValues(value -> 1)
+                            .reduceByKey((a, b) -> a + b);
+                            
+                    JavaPairRDD<String, Double> mediaRDD = totRDD.join(conteggioRDD)
+                            .mapValues(tuple -> tuple._1 / (double) tuple._2);
+                    // restituisce un nuovo JavaPairRDD contenente solo le
+                    // chiavi che esistono in entrambi gli RDD. Per ogni chiave comune, il risultato
+                    // sarà una coppia formata dai valori dei due RDD
+
+                    mediaRDD.foreach(tuple -> {
+                        System.out.println("Importo medio per " + tuple._1 + ": " + tuple._2);
+                    });
+                    break;
+
+                // Inserisci la tua scelta: 4
+                // Importo medio per Prelievo: -128.33333333333334
+                // Importo medio per Deposito: 407.6923076923077
+
+                case 5:
+                    JavaPairRDD<Integer, Integer> transazioniPerClienteRDD = operazioniRDD
+                            .mapToPair(operazione -> {
+                                String[] campi = operazione.split(", ");
+                                Integer idCliente = Integer.parseInt(campi[1]);
+                                return new Tuple2<>(idCliente, 1);
+                            })
+                            .reduceByKey((a, b) -> a + b);
+
+                    int transMax = transazioniPerClienteRDD.map(a -> a._2()).reduce((a, b) -> Math.max(a, b));
+
+                    JavaPairRDD<Integer, Integer> clientiTransazioniMaxRDD = transazioniPerClienteRDD
+                            .filter(a -> a._2() == transMax);
+
+                    clientiTransazioniMaxRDD.foreach(tupla -> {
+                        Integer IDCliente = tupla._1();
+                        int numeroTransazioni = tupla._2();
+                        System.out.println("Cliente con più transazioni: " + IDCliente + ", Numero di transazioni: "
+                                + numeroTransazioni);
+
+                    });
+                    break;
+
+                // Inserisci la tua scelta: 5
+                // Cliente con più transazioni: 101, Numero di transazioni: 5
+                // Cliente con più transazioni: 102, Numero di transazioni: 5
+                // Cliente con più transazioni: 103, Numero di transazioni: 5
+
+                case 6:
+
+                    JavaPairRDD<Integer, String> clienteFasciaRDD = operazioniRDD.mapToPair(line -> {
+                        String[] campi = line.split(", ");
+                        Integer idCliente = Integer.parseInt(campi[1]);
+                        String fasciaOraria = campi[4];
+                        return new Tuple2<>(idCliente, fasciaOraria);
+                    });
+
+                    JavaPairRDD<Tuple2<Integer, String>, Integer> contoFasciaRDD = clienteFasciaRDD
+                            .mapToPair(clienteFascia -> new Tuple2<>(clienteFascia, 1)).reduceByKey((a, b) -> a + b);
+
+                    JavaPairRDD<Integer, Tuple2<String, Integer>> fasciaPreferitaRDD = contoFasciaRDD
+                            .mapToPair(
+                                    a -> new Tuple2<>(a._1()._1(), new Tuple2<>(a._1()._2(), a._2())))
+                            .groupByKey().mapValues(x -> { // qui per ogni cliente (chiave) lavoro sui valori e itero su
+                                                           // fascia oraria e conteggi. inizializzo la fascia a null e
+                                                           // conto a 0. il ciclo poi itera su Tuple2. Se il conteggio è
+                                                           // maggiore di maxcount aggiornerà maxcount e fascia solita.
+                                                           // Alla fine del ciclo restituirà un nuovo tuple contenente
+                                                           // fasciasolita e conteggio
+                                String fasciaSolita = null;
+                                int maxCount = 0;
+                                for (Tuple2<String, Integer> fascia : x) {
+                                    if (fascia._2() > maxCount) {
+                                        maxCount = fascia._2();
+                                        fasciaSolita = fascia._1();
+                                    }
+                                }
+                                return new Tuple2<>(fasciaSolita, maxCount);
+                            });
+
+                    fasciaPreferitaRDD.foreach(x -> {
+                        System.out.println("Cliente " + x._1() + " ha la fascia oraria preferita: "
+                                + x._2()._1() + " con " + x._2()._2() + " operazioni.");
+                    });
+
+                    break;
+
+                // Inserisci la tua scelta: 6
+                // Cliente 101 ha la fascia oraria preferita: Pomeriggio con 2 operazioni.
+                // Cliente 105 ha la fascia oraria preferita: Notte con 2 operazioni.
+                // Cliente 104 ha la fascia oraria preferita: Sera con 2 operazioni.
+                // Cliente 102 ha la fascia oraria preferita: Mattina con 2 operazioni.
+                // Cliente 106 ha la fascia oraria preferita: Mattina con 2 operazioni.
+                // Cliente 103 ha la fascia oraria preferita: Notte con 3 operazioni.
+
+                case 0:
+                    continua = false;
+                    break;
+
+                default:
+                    System.out.println("Scelta non valida. Riprova.");
+                    break;
+            }
+        }
+
+        scanner.close();
+        sc.close();
+
+    }
+
+    private static JavaPairRDD<Integer, Double> calcolaSaldoPerCliente(JavaRDD<String> operazioniRDD) {
+        return operazioniRDD
+                .mapToPair(operazione -> {
+                    String[] campi = operazione.split(", ");
+                    Integer idCliente = Integer.parseInt(campi[1]);
+                    Double importoTransazione = Double.parseDouble(campi[2]);
+                    return new Tuple2<>(idCliente, importoTransazione);
+                }).reduceByKey((importo1, importo2) -> importo1 + importo2);
+
+    };
+
+}
+
+// il mio file txt è questo:
+// 1, 101, 250.00, Deposito, Mattina
+// 2, 102, -100.00, Prelievo, Sera
+// 3, 103, 500.00, Deposito, Pomeriggio
+// 4, 104, -50.00, Prelievo, Notte
+// 5, 101, 200.00, Deposito, Pomeriggio
+// 6, 102, -20.00, Prelievo, Mattina
+// 7, 103, 300.00, Deposito, Notte
+// 8, 104, -150.00, Prelievo, Sera
+// 9, 105, 700.00, Deposito, Notte
+// 10, 106, -120.00, Prelievo, Mattina
+// 11, 101, 350.00, Deposito, Mattina
+// 12, 102, -250.00, Prelievo, Pomeriggio
+// 13, 103, 600.00, Deposito, Notte
+// 14, 104, -75.00, Prelievo, Mattina
+// 15, 105, 400.00, Deposito, Pomeriggio
+// 16, 106, -200.00, Prelievo, Sera
+// 17, 101, 150.00, Deposito, Notte
+// 18, 102, -50.00, Prelievo, Mattina
+// 19, 103, 250.00, Deposito, Pomeriggio
+// 20, 104, -300.00, Prelievo, Sera
+// 21, 105, 800.00, Deposito, Notte
+// 22, 106, -150.00, Prelievo, Mattina
+// 23, 101, 500.00, Deposito, Pomeriggio
+// 24, 102, -75.00, Prelievo, Notte
+// 25, 103, 300.00, Deposito, Notte

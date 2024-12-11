@@ -1,0 +1,64 @@
+package com.example;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Reducer;
+import org.bson.Document;
+
+import com.mongodb.client.MongoCollection;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class WordReducer extends Reducer<Text, LongWritable, Text, LongWritable> {
+
+  @Override
+  protected void reduce(Text key, Iterable<LongWritable> values, Context context)
+      throws IOException, InterruptedException {
+
+        //mi vado a recuperare la mia connessione al database, la configurazione fatta nel main e anche l'operazione
+        
+    MongoDBConnection mongoDBConnection = new MongoDBConnection();
+    Configuration conf = context.getConfiguration();
+    String operazione = conf.get("operazione");
+
+    List<String> paroleUniche = new ArrayList();
+
+
+    //switch per l'eventualità di aggiunta di più operazioni 
+    switch (operazione) {
+
+        case "uniche":
+        //in questo caso imposto una variabile che mi conterà quante volte la parola è stata trovata. Il sistema ogni volta che
+        //la trova con il ciclo aumenterà il contatore quindi una volta che sarà finito ed entrerà nel controllo prenderà quelle
+        //che sono state trovate solo una volta
+
+        int sommaParola = 0;
+        for (LongWritable value : values) {
+            sommaParola += value.get();
+        }
+
+        if (sommaParola == 1) { 
+            paroleUniche.add(key.toString());
+            context.write(key, new LongWritable(sommaParola));
+        }
+
+        context.write(key, new LongWritable(sommaParola));
+
+
+        //qui mi vado a prendere la mia collezione e a passargli il documento che conterrà solo le mie parole uniche
+
+        MongoCollection<Document> paroleUnicheCollection = MongoDBConnection.recuperaCollection(mongoDBConnection.database, "ParoleUniche");
+        Document document = new Document("parola", paroleUniche );
+        paroleUnicheCollection.insertOne(document);
+
+        break;
+
+      default:
+        break;
+    }
+
+  }
+}

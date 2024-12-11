@@ -1,0 +1,62 @@
+package com.example;
+
+import java.util.HashMap;
+
+import java.util.Map;
+
+import org.bson.Document;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Map<String, Long> ciao = new HashMap<>();
+
+        try {
+
+            // ci stiamo collegando alla istanza in locale di MongoDB
+            MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
+
+            // abbiamo recuperato il db della connection
+            MongoDatabase database = mongoClient.getDatabase("local");
+
+            // abbiamo estratto la collection <Collection1> del db <local>
+            MongoCollection<Document> collectionA = recuperaCollection(database, "collectionA");
+            MongoCollection<Document> collectionB = recuperaCollection(database, "collectionB");
+            MongoCollection<Document> collectionC = recuperaCollection(database, "collectionC");
+
+            // Simula il mapreduce
+            mapReducerSimulator(collectionA, ciao);
+            mapReducerSimulator(collectionB, ciao);
+            mapReducerSimulator(collectionC, ciao);
+            for (Map.Entry<String, Long> entry : ciao.entrySet()) {
+                System.out.println(entry.getKey() + ": " + entry.getValue());
+            }
+
+        } catch (Exception e) {
+            System.err.println("Errore: " + e.getMessage());
+        }
+    }
+
+    private static void mapReducerSimulator(MongoCollection<Document> collection, Map<String, Long> ciaoMap) {
+        for (Document doc : collection.find()) {
+            String text = doc.getString("testo");
+            if (text != null) {
+                String[] paroleSplittate = text.split("[\\s+]");
+                for (String parola : paroleSplittate) {
+                    if (!parola.isEmpty()) {
+                        ciaoMap.put(parola, ciaoMap.getOrDefault(parola, 0L) + 1);
+                    }
+                }
+            }
+        }
+    }
+
+    public static MongoCollection<Document> recuperaCollection(MongoDatabase database, String collectionName) {
+        return database.getCollection(collectionName);
+    }
+}

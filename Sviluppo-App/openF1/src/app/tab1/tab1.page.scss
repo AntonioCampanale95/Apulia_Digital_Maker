@@ -1,0 +1,71 @@
+:host {
+  --ion-background-color: #f5f7fa; 
+  --ion-toolbar-background: #3498db; 
+  --ion-toolbar-color: #ffffff; 
+  --ion-item-background: #ecf0f1; 
+  --ion-item-color: #2c3e50;
+  --ion-label-color: #7f8c8d;
+  --ion-button-background: #2980b9; 
+  --ion-button-color: #ffffff; 
+  --ion-text-color: #34495e;
+}
+
+ion-header {
+  background-color: var(--ion-toolbar-background);
+
+  ion-title {
+    color: var(--ion-toolbar-color);
+  }
+
+  img {
+    fill: #ffffff; 
+  }
+}
+
+ion-content {
+  background-color: var(--ion-background-color);
+
+  ion-item {
+    background-color: var(--ion-item-background);
+    border-radius: 8px;
+    margin-bottom: 10px;
+
+    ion-label {
+      color: var(--ion-item-color);
+    }
+  }
+
+  ion-select {
+    --background: var(--ion-item-background);
+    --color: var(--ion-item-color);
+  }
+
+  ion-button {
+    --background: var(--ion-button-background);
+    --color: var(--ion-button-color);
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  h3 {
+    color: var(--ion-text-color);
+  }
+
+  ion-label {
+    color: var(--ion-label-color);
+  }
+}
+
+ion-list {
+  margin-top: 15px;
+}
+
+ion-label {
+  text-align: center;
+  font-size: 16px;
+}
+
+ion-select-option {
+  --color: var(--ion-text-color);
+}
+
