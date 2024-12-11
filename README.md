@@ -1,8 +1,6 @@
 # Apulia_Digital_Maker
 Apulia Digital Maker
 
-Questo repository contiene una raccolta di progetti sviluppati durante il corso da developer "Apulia Digital Maker". 
-I progetti esplorano diverse tecnologie e concetti legati allo sviluppo software, tra cui Angular, Ionic, Node.js, Python, java, c#, SQL
+This repository contains a collection of projects developed during the "Apulia Digital Maker" developer course. The projects explore various technologies and concepts related to software development, including Angular, Ionic, Node.js, Python, Java, C#, and SQL.
 
-Ogni cartella del progetto contiene il codice sorgente e le dipendenze necessarie per l'esecuzione dei progetti. Puoi esplorare ciascun progetto nelle rispettive cartelle.
-
+Each project folder contains the source code and the necessary dependencies for running the projects. You can explore each project within its respective folder.
